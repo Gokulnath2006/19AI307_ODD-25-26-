@@ -1,21 +1,32 @@
-# Ex.No:5(C)  FILE HANDLING USING JAVA
+# Ex.No:5(E) MULTITHREADING -SYNCHRONIZATION
+
 ## QUESTION:
-Write a program to count the number of characters in a file.
+Maintain two int variables a and b, read their initial values from user. Use synchronized block to swap them and print swapped values.
+
+Input:
+Two lines: a and b values
+Output:
+a = <swapped_a>
+b = <swapped_b>
 
 ## AIM:
-To count and display the total number of characters in a file using FileReader.
+To demonstrate the use of a synchronized block for safely swapping two integer variables.
 
 ## ALGORITHM :
-1.	Ask the user for the file name.
-2.	Open the file using FileReader.
-3.	Read each character one by one until the end of the file.
-4.	Increment a counter for each character read.
-5.	Display the total character count.
+1.	Read two integer values a and b from the user.
+2.	Create a lock object for synchronization.
+3.	Use a synchronized(lock) block to perform the swapping.
+4.	Swap values using a temporary variable.
+5.	Print the swapped values of a and b.
+
+
+
+
 
 ## PROGRAM:
  ```
 /*
-Program to implement a File Handling using Java
+Program to implement a Synchronization concept using Java
 Developed by: Gokul Nath R
 RegisterNumber: 212224230077
 */
@@ -23,43 +34,44 @@ RegisterNumber: 212224230077
 
 ## SOURCE CODE:
 ```
-import java.io.*;
+import java.util.Scanner;
 
-public class FileCharacterCount {
-    public static void main(String[] args) {
-        try {
-            // Use BufferedReader to read input
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+public class SwapSynchronized {
+    private int a;
+    private int b;
 
-            // Read the text to write (assume file name is fixed)
-            String text = br.readLine();
+    public SwapSynchronized(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
 
-            // Use a fixed file name
-            String fileName = "output.txt";
-
-            // Write text to file
-            try (FileWriter fw = new FileWriter(fileName)) {
-                if (text != null) {
-                    fw.write(text);
-                }
-            }
-
-            // Count characters in file
-            int charCount = 0;
-            try (FileReader fr = new FileReader(fileName)) {
-                while (fr.read() != -1) {
-                    charCount++;
-                }
-            }
-
-            System.out.println("Number of characters written to the file: " + charCount);
-
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+    public void swap() {
+        Object lock = new Object(); // lock object for synchronization
+        synchronized (lock) {
+            int temp = a;
+            a = b;
+            b = temp;
         }
     }
-}
 
+    public void printValues() {
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int a = Integer.parseInt(sc.nextLine());
+        int b = Integer.parseInt(sc.nextLine());
+
+        SwapSynchronized swapper = new SwapSynchronized(a, b);
+        swapper.swap();
+        swapper.printValues();
+
+        sc.close();
+    }
+}
 ```
 
 
@@ -68,11 +80,11 @@ public class FileCharacterCount {
 
 
 ## OUTPUT:
-<img width="1271" height="303" alt="image" src="https://github.com/user-attachments/assets/8417184e-b934-4c43-a19c-4bc7cec02f4e" />
-
+<img width="1315" height="352" alt="image" src="https://github.com/user-attachments/assets/4ac75d2b-e703-4ae2-9edb-c22bc5dc3b45" />
 
 
 ## RESULT:
-The program successfully reads the file and prints the total number of characters present in it.
+The program successfully swaps the two integers inside a synchronized block and displays the swapped values safely.
+
 
 
